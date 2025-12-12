@@ -1,6 +1,6 @@
 import java.util.Scanner;
 
-import services.GameServices;
+import services.GameService;
 
 public class ArcadeRetroApplication {
 
@@ -10,7 +10,7 @@ public class ArcadeRetroApplication {
 		
 		boolean isRunning = true;
 		
-		GameServices gameService = new GameServices();
+		GameService gameService = new GameService();
 		
 		while(isRunning) {
 			System.out.println("GIOCHI ARCADE");
@@ -31,67 +31,71 @@ public class ArcadeRetroApplication {
 			scanner.nextLine(); 
 
 			switch (choice) {
-			case 1: {
-			    System.out.println("inserisci nome gioco: ");
-			    String Name = scanner.nextLine();
-
-			    System.out.println("inserisci anno uscita gioco: ");
-			    int ReleaseYear;
-			    while (true) {
-			        if (!scanner.hasNextInt()) {
-			            System.out.println("Errore: devi inserire un numero valido per l'anno!");
-			            scanner.nextLine();
-			            continue;
-			        }
-			        ReleaseYear = scanner.nextInt();
-			        scanner.nextLine();
-			        break;
-			    }
-
-			    int Difficulty;
-			    while (true) {
-			        System.out.println("inserisci difficoltà (1-5): ");
-			        
-			        if (!scanner.hasNextInt()) {
-			            System.out.println("Errore: devi inserire un numero!");
-			            scanner.nextLine();
-			            continue;
-			        }
-
-			        Difficulty = scanner.nextInt();
-			        scanner.nextLine(); 
-
-			        if (Difficulty < 1 || Difficulty > 5) {
-			            System.out.println("Errore: la difficoltà deve essere tra 1 e 5.");
-			            continue;
-			        }
-
-			        break; 
-			    }
-
-			    gameService.insertGame(Name, ReleaseYear, Difficulty);
-			    break;
-			}
-
-			case 2: {
-				gameService.printGameList();
-				break;
-			}
-			case 3: {
-				System.out.println("Quale Gioco vuoi cercare? ");
-				String name = scanner.nextLine();
-				gameService.searchGames(name);
-				break;
-			}
-			case 4: {
-				gameService.printDifficultGames();
-				break;
-			}
-			case 5:{
-				isRunning = false;
-			}
-			default:
-				System.out.println("Scelta sbagliata, inserire valore valido");
+			
+				case 1: {
+					System.out.println("inserisci nome gioco: ");
+					String name = scanner.nextLine();
+	
+					System.out.println("inserisci anno uscita gioco: ");
+					int releaseYear;
+					while (true) {
+						if (!scanner.hasNextInt()) {
+							System.out.println("Errore: devi inserire un numero valido per l'anno!");
+							scanner.nextLine();
+							continue;
+						}
+						releaseYear = scanner.nextInt();
+						scanner.nextLine();
+						break;
+					}
+	
+					int difficulty;
+					while (true) {
+						System.out.println("inserisci difficoltà (1-5): ");
+	
+						if (!scanner.hasNextInt()) {
+							System.out.println("Errore: devi inserire un numero!");
+							scanner.nextLine();
+							continue;
+						}
+	
+						difficulty = scanner.nextInt();
+						scanner.nextLine(); 
+	
+						if (difficulty < 1 || difficulty > 5) {
+							System.out.println("Errore: la difficoltà deve essere tra 1 e 5.");
+							continue;
+						}
+	
+						break; 
+					}
+	
+					gameService.insertGame(name, releaseYear, difficulty);
+					break;
+				}
+	
+				case 2: {
+					gameService.printGameList();
+					break;
+				}
+				case 3: {
+					System.out.println("Quale Gioco vuoi cercare? ");
+					String name = scanner.nextLine();
+					gameService.searchGames(name);
+					break;
+				}
+				case 4: {
+					System.out.println("Da quale livello di difficoltà vuoi vedere i giochi?");
+					int level = scanner.nextInt();
+					scanner.nextLine();
+					gameService.printDifficultGames(level);
+					break;
+				}
+				case 5:{
+					isRunning = false;
+				}
+				default:
+					System.out.println("Scelta sbagliata, inserire valore valido");
 			}
 			
 		}

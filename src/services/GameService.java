@@ -2,11 +2,11 @@ package services;
 import java.util.ArrayList;
 import models.Game;
 
-public class GameServices {
+public class GameService {
 	private ArrayList<Game> games = new ArrayList<Game>();
 	
-	public void insertGame(String n, int ry, int d) {
-		Game game = new Game(n, ry, d);
+	public void insertGame(String name, int releaseYear, int difficulty) {
+		Game game = new Game(name, releaseYear, difficulty);
 		this.games.add(game);
 	}
 	
@@ -21,15 +21,13 @@ public class GameServices {
 			if (this.games.get(i).getName().contains(search) ) {
 				System.out.println(this.games.get(i));
 			}
-			else {
-				System.out.println("Nessun gioco corrisponde al seguente nome");
-			}
+			
 		}
 	}
 	
-	public void printDifficultGames() {
+	public void printDifficultGames(int level) {
 		for(int i=0; i<this.games.size(); i++) {
-			if(this.games.get(i).getDifficulty()>=4) {
+			if(this.games.get(i).getDifficulty()>=level) {
 				System.out.println(this.games.get(i));
 			}
 		}
